@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public float gravity;
+    public float groundAcceleration;
+    public float groundDeceleration;
+    public float maxFallSpeed;
+    public float jumpStoppedEarlyMultiplier;
+    public float fallAcceleration;
 
     public LayerMask groundLayer;
     bool isGrounded;
+    bool jumpWasReleasedEarly;
 
     public float jumpForce;
-    public float airMultiplier;
 
     public Transform orientation;
 
@@ -22,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocityDirection;
 
     private float jumpTimeStamp;
+    private int timesJumped;
 
 
     void Start()
@@ -33,44 +39,74 @@ public class PlayerMovement : MonoBehaviour
     {
         inputDirection = ComputeMoveDirection();
 
-        if (isGrounded && GetJumpInput(false))
+        if (timesJumped < 2 && GetJumpInput(false))
             Jump();
+
+        if (velocityDirection.y > 0f && Keyboard.current.spaceKey.wasReleasedThisFrame)
+            jumpWasReleasedEarly = true;
     }
 
     void FixedUpdate()
     {
         if (velocityDirection.y <= 0)
-            isGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), Vector3.down, 0.2f, groundLayer);
+        {
+            bool checkIfGrounded = Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), Vector3.down, 0.2f, groundLayer);
+
+            if (isGrounded != checkIfGrounded)
+            {
+                if (checkIfGrounded == true)
+                {
+                    jumpWasReleasedEarly = false;
+                    timesJumped = 0;
+                    Debug.Log("you touched the ground");
+                }
+                else
+                    Debug.Log("you are now flying");
+
+                isGrounded = checkIfGrounded;
+            }
+        }
 
         MovePlayer(inputDirection);
 
         if (isGrounded == false)
             ApplyGravity();
         else
-            velocityDirection.y = 0;
+            velocityDirection.y = -0.5f;
 
         rb.velocity = velocityDirection;
     }
 
     private void MovePlayer(Vector3 direction)
     {
-        Vector3 moveDirection = orientation.forward * direction.z + orientation.right * direction.x;
+        Vector3 moveDirection = (orientation.forward * direction.z + orientation.right * direction.x).normalized;
         moveDirection *= speed;
-        velocityDirection = new Vector3(moveDirection.x, velocityDirection.y, moveDirection.z);
+
+        if (inputDirection.magnitude <= 0.1f)
+        {
+            velocityDirection.x = Mathf.MoveTowards(velocityDirection.x, 0f, groundDeceleration * Time.fixedDeltaTime);
+            velocityDirection.z = Mathf.MoveTowards(velocityDirection.z, 0f, groundDeceleration * Time.fixedDeltaTime);
+        }
+        else
+        {
+            velocityDirection.x = Mathf.MoveTowards(velocityDirection.x, moveDirection.x, groundAcceleration * Time.fixedDeltaTime);
+            velocityDirection.z = Mathf.MoveTowards(velocityDirection.z, moveDirection.z, groundAcceleration * Time.fixedDeltaTime);
+        }
     }
 
     private void ApplyGravity()
     {
-        velocityDirection += Vector3.down * gravity;
+        float fallSpeed = jumpWasReleasedEarly ? fallAcceleration * jumpStoppedEarlyMultiplier : fallAcceleration;
+
+        velocityDirection.y = Mathf.MoveTowards(velocityDirection.y, -maxFallSpeed, fallSpeed * Time.fixedDeltaTime);
     }
 
     private void Jump()
     {
-        //reset y velocity
-        velocityDirection = new Vector3(velocityDirection.x, 0f, velocityDirection.z);
         isGrounded = false;
-
-        velocityDirection += Vector3.up * jumpForce;
+        jumpWasReleasedEarly = false;
+        timesJumped += 1;
+        velocityDirection.y = jumpForce;
     }
 
 
