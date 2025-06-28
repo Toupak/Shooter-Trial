@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float groundAcceleration;
     public float groundDeceleration;
+    public float airControlMultiplier;
     public float maxFallSpeed;
     public float jumpStoppedEarlyMultiplier;
     public float fallAcceleration;
@@ -86,6 +87,11 @@ public class PlayerMovement : MonoBehaviour
         {
             velocityDirection.x = Mathf.MoveTowards(velocityDirection.x, 0f, groundDeceleration * Time.fixedDeltaTime);
             velocityDirection.z = Mathf.MoveTowards(velocityDirection.z, 0f, groundDeceleration * Time.fixedDeltaTime);
+        }
+        else if (isGrounded == false)
+        {
+            velocityDirection.x = Mathf.MoveTowards(velocityDirection.x, moveDirection.x, airControlMultiplier * Time.fixedDeltaTime);
+            velocityDirection.z = Mathf.MoveTowards(velocityDirection.z, moveDirection.z, airControlMultiplier * Time.fixedDeltaTime);
         }
         else
         {
