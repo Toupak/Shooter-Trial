@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     private float jumpTimeStamp;
+    private float dashTimeStamp;
 
     public Vector3 ComputeMoveDirection()
     {
@@ -85,6 +86,22 @@ public class PlayerInput : MonoBehaviour
             return true;
         else if (Gamepad.current != null)
             return Gamepad.current.aButton.wasPressedThisFrame || Gamepad.current.leftShoulder.wasPressedThisFrame;
+        else
+            return false;
+    }
+
+    public bool GetDashInput(bool useBuffer = true)
+    {
+        if (useBuffer && Time.time <= dashTimeStamp)
+        {
+            dashTimeStamp = -1.0f;
+            return true;
+        }
+
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.bButton.wasPressedThisFrame;
         else
             return false;
     }

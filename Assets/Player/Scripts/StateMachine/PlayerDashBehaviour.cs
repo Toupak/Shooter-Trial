@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerDashBehaviour : IPlayerBehaviour
+{
+    private Vector3 startingPosition;
+    private float dashTimeStamp;
+    private float dashDuration;
+
+    public void StartBehaviour(PlayerStateMachine player, BehaviourType previous)
+    {
+        startingPosition = player.transform.position;
+        dashDuration = player.data.dashDistance / player.data.dashForce;
+
+        player.velocityDirection = player.cameraOrientation.forward * player.data.dashForce;
+        player.ApplyMovement();
+
+        dashTimeStamp = Time.time;
+    }
+
+    public void UpdateBehaviour(PlayerStateMachine player)
+    {
+        if (Vector3.Distance(startingPosition, player.transform.position) >= player.data.dashDistance)
+            StopDash(player);
+
+        if (Time.time - dashTimeStamp > dashDuration)
+            StopDash(player);
+    }
+
+    public void FixedUpdateBehaviour(PlayerStateMachine player)
+    {
+        player.jumpBehaviour.CheckCollision(player);
+    }
+
+    public void StopDash(PlayerStateMachine player)
+    {
+        if (player.isGrounded)
+            player.ChangeBehaviour(player.runBehaviour);
+        else
+            player.ChangeBehaviour(player.jumpBehaviour);
+    }
+
+    public bool CanDash(PlayerStateMachine player)
+    {
+        return true;
+    }
+
+    public void StopBehaviour(PlayerStateMachine player, BehaviourType next)
+    {
+        
+    }
+
+    public BehaviourType GetBehaviourType()
+    {
+        return BehaviourType.Dash;
+    }
+
+    // appuie sur shift -> Ajoute une vélocité dans la direction qu'on regarde 
+}

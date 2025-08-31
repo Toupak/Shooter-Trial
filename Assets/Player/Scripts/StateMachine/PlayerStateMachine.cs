@@ -8,12 +8,14 @@ public class PlayerStateMachine : MonoBehaviour
 
     public PlayerRunBehaviour runBehaviour = new PlayerRunBehaviour();
     public PlayerJumpBehaviour jumpBehaviour = new PlayerJumpBehaviour();
+    public PlayerDashBehaviour dashBehaviour = new PlayerDashBehaviour();
 
     public IPlayerBehaviour currentBehaviour; 
 
     public PlayerData data;
 
     public Transform orientation;
+    public Transform cameraOrientation;
     
     [HideInInspector] public PlayerInput input;
 

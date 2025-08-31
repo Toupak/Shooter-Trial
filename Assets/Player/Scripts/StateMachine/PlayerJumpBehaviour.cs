@@ -18,6 +18,9 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
     {
         if (timesJumped < 2 && player.input.GetJumpInput(false))
             StartJump(player);
+
+        if (player.dashBehaviour.CanDash(player) && player.input.GetDashInput(false))
+            player.ChangeBehaviour(player.dashBehaviour);
     }
 
     public void FixedUpdateBehaviour(PlayerStateMachine player)

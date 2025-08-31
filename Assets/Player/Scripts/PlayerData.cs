@@ -24,4 +24,9 @@ public class PlayerData : ScriptableObject
     public float jumpStoppedEarlyMultiplier;
     public float fallAcceleration;
     public float jumpForce;
+
+    [Header("Dash Variables")]
+    public float dashForce;
+    public float dashDistance;
+    public float dashDeceleration;
 }
