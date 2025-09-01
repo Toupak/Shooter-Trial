@@ -105,4 +105,20 @@ public class PlayerInput : MonoBehaviour
         else
             return false;
     }
+
+    public bool GetShootInput(bool useBuffer = true)
+    {
+        if (useBuffer && Time.time <= dashTimeStamp)
+        {
+            dashTimeStamp = -1.0f;
+            return true;
+        }
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.rightTrigger.wasPressedThisFrame;
+        else
+            return false;
+    }
 }

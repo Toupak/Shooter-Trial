@@ -29,4 +29,5 @@ public class PlayerData : ScriptableObject
     public float dashForce;
     public float dashDistance;
     public float dashDeceleration;
+    public float dashVelocityStopThreshold;
 }

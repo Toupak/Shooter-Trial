@@ -8,6 +8,8 @@ public class PlayerDashBehaviour : IPlayerBehaviour
     private float dashTimeStamp;
     private float dashDuration;
 
+    private bool isDecelerating;
+
     public void StartBehaviour(PlayerStateMachine player, BehaviourType previous)
     {
         startingPosition = player.transform.position;
@@ -22,15 +24,23 @@ public class PlayerDashBehaviour : IPlayerBehaviour
     public void UpdateBehaviour(PlayerStateMachine player)
     {
         if (Vector3.Distance(startingPosition, player.transform.position) >= player.data.dashDistance)
-            StopDash(player);
+            isDecelerating = true;
 
         if (Time.time - dashTimeStamp > dashDuration)
-            StopDash(player);
+            isDecelerating = true;
     }
 
     public void FixedUpdateBehaviour(PlayerStateMachine player)
     {
         player.jumpBehaviour.CheckCollision(player);
+
+        if (isDecelerating)
+            player.velocityDirection = Vector3.MoveTowards(player.velocityDirection, Vector3.zero, player.data.dashDeceleration * Time.fixedDeltaTime);
+
+        if (isDecelerating && player.velocityDirection.magnitude < player.data.dashVelocityStopThreshold)
+            StopDash(player);
+
+        player.ApplyMovement();
     }
 
     public void StopDash(PlayerStateMachine player)
@@ -48,7 +58,7 @@ public class PlayerDashBehaviour : IPlayerBehaviour
 
     public void StopBehaviour(PlayerStateMachine player, BehaviourType next)
     {
-        
+        isDecelerating = false;
     }
 
     public BehaviourType GetBehaviourType()

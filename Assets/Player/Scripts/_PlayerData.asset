@@ -26,6 +26,7 @@ MonoBehaviour:
   jumpStoppedEarlyMultiplier: 1.5
   fallAcceleration: 50
   jumpForce: 20
-  dashForce: 50
+  dashForce: 150
   dashDistance: 10
-  dashDeceleration: 0
+  dashDeceleration: 500
+  dashVelocityStopThreshold: 15
