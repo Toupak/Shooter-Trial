@@ -114,7 +114,7 @@ public class PlayerInput : MonoBehaviour
             return true;
         }
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.isPressed)
             return true;
         else if (Gamepad.current != null)
             return Gamepad.current.rightTrigger.wasPressedThisFrame;
