@@ -3799,6 +3799,7 @@ MonoBehaviour:
   sensX: 1200
   sensY: 1200
   orientation: {fileID: 1739624915}
+  cameraSpeedShootingSpread: 50
 --- !u!1 &331832828 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5211105591727532572, guid: 212f6a7f0433d0e4ab3e929121663729,
@@ -3867,6 +3868,21 @@ PrefabInstance:
         type: 3}
       propertyPath: firerate
       value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798138363742878485, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      propertyPath: bulletVelocity
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798138363742878485, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 330585546}
+    - target: {fileID: 6798138363742878485, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      propertyPath: spreadIntensity
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6798138363742878485, guid: d32892c82a841e34bb692140d685dcfc,
         type: 3}
@@ -14792,7 +14808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1746955936}
   m_Layer: 0
-  m_Name: Entities
+  m_Name: __Entities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
