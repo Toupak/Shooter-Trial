@@ -1,10 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public class RecoilBuffer
+{
+    public float recoilxStrength;
+    public float recoilyStrength;
+    public float timeStamp;
+
+    public RecoilBuffer(float recoilx, float recoily, float time)
+    {
+        recoilxStrength = recoilx;
+        recoilyStrength = recoily;
+        timeStamp = time;
+    }
+}
+
+
 public class PlayerLook : MonoBehaviour
 {
+    //PlayerMouse Camera
     public float sensX;
     public float sensY;
 
@@ -13,8 +30,11 @@ public class PlayerLook : MonoBehaviour
     private float xRotation;
     private float yRotation;
 
-    [SerializeField] private float cameraSpeedShootingSpread;
+    //PlayerRecoil Camera
+    private List<RecoilBuffer> recoilBuffers = new List<RecoilBuffer>();
 
+    [SerializeField] private float cameraMovingSpeedOnShoot;
+    
     private float targetxOffset;
     private float targetyOffset;
 
@@ -24,34 +44,44 @@ public class PlayerLook : MonoBehaviour
     private float onStopShootxOffset;
     private float onStopShootyOffset;
 
+    private float onStartShootingTimeStamp;
+    private float lastShootTimeStamp;
+
     void Start()
     {
         Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        RifleShoot.OnPlayerShoot.AddListener((x, y) =>
+        RifleShoot.OnPlayerShoot.AddListener((spreadx, spready) =>
         {
             currentxOffset = xRotation;
             currentyOffset = yRotation;
 
-            targetxOffset = currentxOffset + x;
-            targetyOffset = currentyOffset + y;
+            targetxOffset = currentxOffset + spreadx;
+            targetyOffset = currentyOffset + spready;
         });
 
-        RifleShoot.OnPlayerStartShooting.AddListener(() =>
+        RifleShoot.OnPlayerStartShooting.AddListener((snapiness) =>
         {
             onStopShootxOffset = 0;
             onStopShootyOffset = 0;
+
+            cameraMovingSpeedOnShoot = snapiness;
+            recoilBuffers.Clear();
         });
 
-        RifleShoot.OnPlayerStopShooting.AddListener(() =>
+        RifleShoot.OnPlayerStopShooting.AddListener((returnSpeed, returnRecoilDuration) =>
         {
             currentxOffset = xRotation;
             currentyOffset = yRotation;
 
+            GetLastBuffers(returnRecoilDuration);
+
             targetxOffset = currentxOffset - onStopShootxOffset;
             targetyOffset = currentyOffset - onStopShootyOffset;
+
+            cameraMovingSpeedOnShoot = returnSpeed;
         });
     }
 
@@ -77,13 +107,25 @@ public class PlayerLook : MonoBehaviour
         float previousxOffset = currentxOffset;
         float previousyOffset = currentyOffset;
         
-        currentxOffset = Mathf.MoveTowards(currentxOffset, targetxOffset, cameraSpeedShootingSpread * Time.deltaTime);
-        currentyOffset = Mathf.MoveTowards(currentyOffset, targetyOffset, cameraSpeedShootingSpread * Time.deltaTime);
+        currentxOffset = Mathf.MoveTowards(currentxOffset, targetxOffset, cameraMovingSpeedOnShoot * Time.deltaTime);
+        currentyOffset = Mathf.MoveTowards(currentyOffset, targetyOffset, cameraMovingSpeedOnShoot * Time.deltaTime);
 
         xRotation += currentxOffset - previousxOffset;
         yRotation += currentyOffset - previousyOffset;
 
-        onStopShootxOffset += currentxOffset - previousxOffset;
-        onStopShootyOffset += currentyOffset - previousyOffset;
+        RecoilBuffer lastBuffer = new RecoilBuffer(currentxOffset - previousxOffset, currentyOffset - previousyOffset, Time.time);
+        recoilBuffers.Add(lastBuffer);
+    }
+
+    private void GetLastBuffers(float returnRecoilDuration)
+    {
+        foreach(RecoilBuffer buffer in recoilBuffers)
+        {
+            if (Time.time - buffer.timeStamp < returnRecoilDuration)
+            {
+                onStopShootxOffset += buffer.recoilxStrength;
+                onStopShootyOffset += buffer.recoilyStrength;
+            }
+        }
     }
 }

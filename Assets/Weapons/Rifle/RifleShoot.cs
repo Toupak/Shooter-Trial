@@ -7,19 +7,33 @@ using UnityEngine.InputSystem;
 public class RifleShoot : MonoBehaviour
 {
     [HideInInspector] public static UnityEvent<float, float> OnPlayerShoot = new UnityEvent<float, float>();
-    [HideInInspector] public static UnityEvent OnPlayerStartShooting = new UnityEvent();
-    [HideInInspector] public static UnityEvent OnPlayerStopShooting = new UnityEvent();
+    [HideInInspector] public static UnityEvent<float> OnPlayerStartShooting = new UnityEvent<float>();
+    [HideInInspector] public static UnityEvent<float, float> OnPlayerStopShooting = new UnityEvent<float, float>();
 
-    [SerializeField] private float firerate;
+    [Header("WeaponStats")]
+    [SerializeField] private float rpm;
 
+    [Header("WeaponProperties")]
+    [SerializeField] private float spreadxIntensity;
+    [SerializeField] private float spreadyIntensity;
+    [SerializeField] private float returnRecoilDuration;
+    [SerializeField] private float fullRecoilDuration;
+    [SerializeField] private float returnSpeed;
+    [SerializeField] private float snapiness;
+
+    [SerializeField] private LayerMask targetLayer;
+
+    private float Recoilx;
+    private float Recoily;
+
+    [Header("WeaponConstruct")]
+    [SerializeField] private List<AudioClip> shootingSounds;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawnPosition;
     [SerializeField] private float bulletVelocity;
-    [SerializeField] private float spreadIntensity;
-
-    [SerializeField] private List<AudioClip> shootingSounds;
 
     private float lastShootTimeStamp;
+    private float hasStartedshootingTimeStamp;
 
     void Update()
     {
@@ -42,45 +56,62 @@ public class RifleShoot : MonoBehaviour
         Vector3 finalPosition = cameraPosition + cameraDirection * 1000;
         Vector3 finalDirection = (finalPosition - bulletSpawnPosition.position).normalized;
 
+        ShootRaycast(cameraPosition, cameraDirection);
+
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPosition.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody>().velocity = finalDirection * bulletVelocity;
 
-        OnPlayerShoot.Invoke(CalculateSpread(), CalculateSpread());
+        CalculateRecoil();
+        OnPlayerShoot.Invoke(Recoilx, Recoily);
 
         ShootingSound();
 
         Destroy(bullet, 1f);
     }
 
-    private float CalculateSpread()
+    private void ShootRaycast(Vector3 cameraPosition, Vector3 shootDirection)
     {
-        return Random.Range(-spreadIntensity, spreadIntensity);
+        bool hasHit = Physics.Raycast(cameraPosition, shootDirection, out RaycastHit hitInfo, 200, targetLayer);
+        
+        if (hasHit)
+        {
+            if (hitInfo.transform.CompareTag("Target"))
+                Debug.Log("Target was hit");
+        }
+    }
+
+    private void CalculateRecoil()
+    {
+        if (Time.time - hasStartedshootingTimeStamp > fullRecoilDuration)
+            Recoilx = (Random.Range(0, spreadyIntensity) * -1)/4;
+        else
+            Recoilx = Random.Range(0, spreadyIntensity) * -1;
+
+            Recoily = Random.Range(-spreadxIntensity, spreadxIntensity);
     }
 
     private void RegisterStartShooting()
     {
-        OnPlayerStartShooting.Invoke();
+        OnPlayerStartShooting.Invoke(snapiness);
+        hasStartedshootingTimeStamp = Time.time;
     }
 
     private void RegisterStopShooting()
     {
-        OnPlayerStopShooting.Invoke();
+        OnPlayerStopShooting.Invoke(returnSpeed, returnRecoilDuration);
     }
-
-    //2x plus fort vers le haut - pas vers le bas - 2x moins fort en horizontal
-    //limite de temps ou ça arrête de monter
-    //vitesse différente aller/retour
-    //Ajouter "snapiness"
-    //Ajouter "ReturnSpeed"
-    //Ce script qui envoie la vitesse de caméra et pas l'autre
 
     private bool CanShoot()
     {
-        return Time.time - lastShootTimeStamp >= firerate;
+        return Time.time - lastShootTimeStamp >= 60 / rpm;
     }
 
     private void ShootingSound()
     {
         SFXManager.Instance.PlayRandomSFX(shootingSounds.ToArray());
+        //Check le PDF de proSoundCollection
     }
+
+    //muzzleflash
+    //arme qui bouge quand tire / en movement
 }
