@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerJumpBehaviour : IPlayerBehaviour
 {
+    [HideInInspector] public static UnityEvent OnPlayerJump = new UnityEvent();
+
     private bool jumpWasReleasedEarly;
     private bool jumpToConsume;
     private int timesJumped;
@@ -63,9 +66,10 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
             timesJumped += 1;
         else
             timesJumped += 2;
-        
+
         player.isGrounded = false;
 
+        OnPlayerJump.Invoke();
         player.velocityDirection.y = player.data.jumpForce;
     }
 
@@ -87,7 +91,9 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
                     hasLanded = true;
                 }
                 else
+                {
                     Debug.Log("you are now flying");
+                }
 
                 player.isGrounded = checkIfGrounded;
             }

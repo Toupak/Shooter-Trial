@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerDashBehaviour : IPlayerBehaviour
 {
+    [HideInInspector] public static UnityEvent OnPlayerDash = new UnityEvent();
+
     private Vector3 startingPosition;
     private float dashTimeStamp;
     private float dashDuration;
@@ -19,6 +22,7 @@ public class PlayerDashBehaviour : IPlayerBehaviour
         player.ApplyMovement();
 
         dashTimeStamp = Time.time;
+        OnPlayerDash.Invoke();
     }
 
     public void UpdateBehaviour(PlayerStateMachine player)
@@ -54,6 +58,11 @@ public class PlayerDashBehaviour : IPlayerBehaviour
     public bool CanDash(PlayerStateMachine player)
     {
         return true;
+    }
+
+    private void PlayDashSound()
+    {
+
     }
 
     public void StopBehaviour(PlayerStateMachine player, BehaviourType next)

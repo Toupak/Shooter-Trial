@@ -11,7 +11,6 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerDashBehaviour dashBehaviour = new PlayerDashBehaviour();
 
     public IPlayerBehaviour currentBehaviour; 
-
     public PlayerData data;
 
     public Transform orientation;
