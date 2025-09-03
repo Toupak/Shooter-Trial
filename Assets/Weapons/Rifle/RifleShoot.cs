@@ -31,6 +31,9 @@ public class RifleShoot : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawnPosition;
     [SerializeField] private float bulletVelocity;
+    [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private float muzzleFlashSizeCoefficient;
+
 
     private float lastShootTimeStamp;
     private float hasStartedshootingTimeStamp;
@@ -64,7 +67,7 @@ public class RifleShoot : MonoBehaviour
         CalculateRecoil();
         OnPlayerShoot.Invoke(Recoilx, Recoily);
 
-        ShootingSound();
+        ShootingEffects();
 
         Destroy(bullet, 1f);
     }
@@ -106,12 +109,16 @@ public class RifleShoot : MonoBehaviour
         return Time.time - lastShootTimeStamp >= 60 / rpm;
     }
 
-    private void ShootingSound()
+    private void ShootingEffects()
     {
         SFXManager.Instance.PlayRandomSFX(shootingSounds.ToArray());
         //Check le PDF de proSoundCollection
+
+        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, bulletSpawnPosition.position + bulletSpawnPosition.forward * 0.001f, bulletSpawnPosition.rotation);
+        muzzleFlash.transform.SetParent(bulletSpawnPosition);
+        muzzleFlash.transform.localScale = Vector3.one * muzzleFlashSizeCoefficient;
+        Destroy(muzzleFlash, 0.25f);
     }
 
-    //muzzleflash
     //arme qui bouge quand tire / en movement
 }
