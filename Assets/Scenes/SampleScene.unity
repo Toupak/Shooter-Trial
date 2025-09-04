@@ -2273,8 +2273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d04f4d8839ffa4298ade0fd5ff4b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSound: {fileID: 8300000, guid: a7ed2fe7ae0906d4c8a7fa049347a37c, type: 3}
-  jumpSound: {fileID: 8300000, guid: 9e424e0cf91e5364bba4a70adc8266da, type: 3}
+  dashSound: {fileID: 8300000, guid: a8531913fc42e9d49bcd085e26fd82be, type: 3}
+  jumpSound: {fileID: 8300000, guid: af60bcdc45b7b584b8b46b05f82fd2e5, type: 3}
+  landSound: {fileID: 8300000, guid: 1d7a589a09d38214ca9c2eb676b14cd7, type: 3}
 --- !u!1 &144443233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2327418456508348254, guid: 212f6a7f0433d0e4ab3e929121663729,

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerJumpBehaviour : IPlayerBehaviour
 {
     [HideInInspector] public static UnityEvent OnPlayerJump = new UnityEvent();
+    [HideInInspector] public static UnityEvent OnPlayerLand = new UnityEvent();
 
     private bool jumpWasReleasedEarly;
     private bool jumpToConsume;
@@ -87,6 +88,7 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
                 {
                     jumpWasReleasedEarly = false;
                     timesJumped = 0;
+                    OnPlayerLand.Invoke();
                     Debug.Log("you touched the ground");
                     hasLanded = true;
                 }
