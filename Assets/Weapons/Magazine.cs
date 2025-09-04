@@ -11,8 +11,11 @@ public class Magazine : MonoBehaviour
 
     private RifleShoot weapon;
     private WeaponSFX weaponSFX;
+    [SerializeField] UI_Magazine ammoDisplay;
+
 
     [SerializeField] private int magazineSize;
+    public int MagazineSize => magazineSize;
     [SerializeField] private float reloadTime;
     public float ReloadTime => reloadTime;
 
@@ -21,8 +24,6 @@ public class Magazine : MonoBehaviour
 
     private bool isReloading;
     public bool IsReloading => isReloading;
-
-
 
     void Start()
     {
@@ -46,6 +47,7 @@ public class Magazine : MonoBehaviour
     public void UseAmmo()
     {
         bulletsLeft -= 1;
+        ammoDisplay.UpdateUI();
     }
 
     private IEnumerator Reload()
