@@ -121,4 +121,19 @@ public class PlayerInput : MonoBehaviour
         else
             return false;
     }
+    public bool GetReloadInput(bool useBuffer = true)
+    {
+        if (useBuffer && Time.time <= dashTimeStamp)
+        {
+            dashTimeStamp = -1.0f;
+            return true;
+        }
+
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.xButton.wasPressedThisFrame;
+        else
+            return false;
+    }
 }

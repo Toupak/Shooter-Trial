@@ -10,8 +10,16 @@ public class RifleShoot : MonoBehaviour
     [HideInInspector] public static UnityEvent<float> OnPlayerStartShooting = new UnityEvent<float>();
     [HideInInspector] public static UnityEvent<float, float> OnPlayerStopShooting = new UnityEvent<float, float>();
 
+    private Squeeze_and_Stretch squeeze;
+    private Magazine magazine;
+
     [Header("WeaponStats")]
     [SerializeField] private float rpm;
+
+    private float lastShootTimeStamp;
+    private float hasStartedshootingTimeStamp;
+    private bool isShooting;
+    public bool IsShooting => isShooting;
 
     [Header("WeaponProperties")]
     [SerializeField] private float spreadxIntensity;
@@ -28,19 +36,20 @@ public class RifleShoot : MonoBehaviour
 
     [Header("WeaponConstruct")]
     [SerializeField] private List<AudioClip> shootingSounds;
+
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawnPosition;
     [SerializeField] private float bulletVelocity;
+
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private float muzzleFlashSizeCoefficient;
 
-    private Squeeze_and_Stretch squeeze;
-    private float lastShootTimeStamp;
-    private float hasStartedshootingTimeStamp;
+
 
     private void Start()
     {
         squeeze = GetComponent<Squeeze_and_Stretch>();
+        magazine = GetComponent<Magazine>();
     }
 
     void Update()
@@ -104,18 +113,20 @@ public class RifleShoot : MonoBehaviour
 
     private void RegisterStartShooting()
     {
+        isShooting = true;
         OnPlayerStartShooting.Invoke(snapiness);
         hasStartedshootingTimeStamp = Time.time;
     }
 
     private void RegisterStopShooting()
     {
+        isShooting = false;
         OnPlayerStopShooting.Invoke(returnSpeed, returnRecoilDuration);
     }
 
     private bool CanShoot()
     {
-        return Time.time - lastShootTimeStamp >= 60 / rpm;
+        return Time.time - lastShootTimeStamp >= 60 / rpm && magazine.BulletsLeft > 0 && magazine.IsReloading == false;
     }
 
     private void ShootingEffects()
