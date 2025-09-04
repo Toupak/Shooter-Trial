@@ -16,6 +16,8 @@ public class RifleAnimation : MonoBehaviour
     private float targetxrotation;
     private float currentxrotation;
 
+    private Squeeze_and_Stretch squeeze;
+
     void Start()
     {
         RifleShoot.OnPlayerShoot.AddListener((_, _) => DoRifleAnimation());
@@ -25,6 +27,8 @@ public class RifleAnimation : MonoBehaviour
 
         targetxrotation = transform.localRotation.x;
         currentxrotation = transform.localRotation.x;
+
+        squeeze = GetComponent<Squeeze_and_Stretch>();
     }
 
     void Update()

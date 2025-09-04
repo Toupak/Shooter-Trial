@@ -34,9 +34,16 @@ public class RifleShoot : MonoBehaviour
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private float muzzleFlashSizeCoefficient;
 
-
+    private Squeeze_and_Stretch squeeze;
+    private Blink blink;
     private float lastShootTimeStamp;
     private float hasStartedshootingTimeStamp;
+
+    private void Start()
+    {
+        squeeze = GetComponent<Squeeze_and_Stretch>();
+        blink = GetComponent<Blink>();
+    }
 
     void Update()
     {
@@ -79,7 +86,11 @@ public class RifleShoot : MonoBehaviour
         if (hasHit)
         {
             if (hitInfo.transform.CompareTag("Target"))
+            {
+                squeeze.Trigger();
+                blink.Trigger();
                 Debug.Log("Target was hit");
+            }
         }
     }
 

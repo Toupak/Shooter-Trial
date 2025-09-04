@@ -10,7 +10,8 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private AudioClip landSound;
 
     [SerializeField] private List<AudioClip> footsteps;
-    [SerializeField] private float footstepCD;
+    [SerializeField] private float footstepsCD;
+    [SerializeField] private float footstepsVolume;
     private float lastFootstepTimeStamp;
 
     void Start()
@@ -23,13 +24,13 @@ public class PlayerSFX : MonoBehaviour
 
     void Update()
     {
-        if (PlayerStateMachine.Instance.currentBehaviour.GetBehaviourType() == BehaviourType.Run && PlayerStateMachine.Instance.rb.velocity.magnitude > 0.1 && Time.time - lastFootstepTimeStamp > footstepCD)
+        if (PlayerStateMachine.Instance.currentBehaviour.GetBehaviourType() == BehaviourType.Run && PlayerStateMachine.Instance.rb.velocity.magnitude > 0.1 && Time.time - lastFootstepTimeStamp > footstepsCD)
             Footsteps();
     }
 
     public void Footsteps()
     {
-        SFXManager.Instance.PlayRandomSFX(footsteps.ToArray());
+        SFXManager.Instance.PlayRandomSFX(footsteps.ToArray(), footstepsVolume);
         lastFootstepTimeStamp = Time.time;
     }
 }

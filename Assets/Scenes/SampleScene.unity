@@ -2298,7 +2298,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 881786bd07fb85a47adfaf16f6a8f4f7, type: 3}
   - {fileID: 8300000, guid: 480c058dcb941fd46964f63f47fb47ca, type: 3}
   - {fileID: 8300000, guid: 1924c97cfd9170d45a2f1286d5b196c8, type: 3}
-  footstepCD: 0.35
+  footstepsCD: 0.35
+  footstepsVolume: 0.03
 --- !u!1 &144443233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2327418456508348254, guid: 212f6a7f0433d0e4ab3e929121663729,
@@ -4102,6 +4103,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2097589736}
+    - targetCorrespondingSourceObject: {fileID: 7658220749020036070, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2097589740}
+    - targetCorrespondingSourceObject: {fileID: 7658220749020036070, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2097589741}
   m_SourcePrefab: {fileID: 100100000, guid: d32892c82a841e34bb692140d685dcfc, type: 3}
 --- !u!1 &367848652 stripped
 GameObject:
@@ -17194,6 +17203,39 @@ MonoBehaviour:
   knockupDistance: 2.5
   returnSpeed: 0.25
   returnSpeedRotation: 100
+--- !u!114 &2097589740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601719200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f95e61d16c87446a6fc8cac0288ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 1983354625}
+  xSqueeze: 0.8
+  ySqueeze: 1.2
+  duration: 0.1
+  delay: 0
+--- !u!114 &2097589741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601719200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b69a6fb71dea344f9f38abca7fc6adc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1983354626}
+  blinkColor: {r: 0.8490566, g: 0.49619725, b: 0.11614456, a: 0}
+  blinkDuration: 0.1
+  blinkInterval: 0.03
 --- !u!1 &2099659624 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5698203166358118090, guid: fe711ef07146975449e838749f09d65c,
