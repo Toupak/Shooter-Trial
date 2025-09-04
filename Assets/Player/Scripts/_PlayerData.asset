@@ -18,7 +18,7 @@ MonoBehaviour:
   mouseSensitivity: 1200
   joystickSensitivityX: 10000
   joystickSensitivityY: 5000
-  speed: 15
+  speed: 18
   groundAcceleration: 120
   groundDeceleration: 80
   airControlMultiplier: 45

@@ -2276,6 +2276,29 @@ MonoBehaviour:
   dashSound: {fileID: 8300000, guid: a8531913fc42e9d49bcd085e26fd82be, type: 3}
   jumpSound: {fileID: 8300000, guid: af60bcdc45b7b584b8b46b05f82fd2e5, type: 3}
   landSound: {fileID: 8300000, guid: 1d7a589a09d38214ca9c2eb676b14cd7, type: 3}
+  footsteps:
+  - {fileID: 8300000, guid: c5ac3e31deca3d0458c5624232812da1, type: 3}
+  - {fileID: 8300000, guid: 233482cf6022a94438af1f07466a3b5c, type: 3}
+  - {fileID: 8300000, guid: 663840260d09b9f46b49024793500d69, type: 3}
+  - {fileID: 8300000, guid: 7b44dd80ddb3db74eb293b9ee3c7c2d3, type: 3}
+  - {fileID: 8300000, guid: ae991349ef6c04a4aabf2e2a9c76b920, type: 3}
+  - {fileID: 8300000, guid: 5ba4454733e160e419ce3c33bf5d26bf, type: 3}
+  - {fileID: 8300000, guid: f9e98654622c2d242b0b5997406cca24, type: 3}
+  - {fileID: 8300000, guid: c8e2bb87ff566c043b699ce3635c3df8, type: 3}
+  - {fileID: 8300000, guid: 77ef84188261e7544bc996fb55daa52e, type: 3}
+  - {fileID: 8300000, guid: 06282aa92620819499cbe7ff3bda812c, type: 3}
+  - {fileID: 8300000, guid: a4b6d182d3fb60d49ab9a0a35ef84464, type: 3}
+  - {fileID: 8300000, guid: 11a1b630600fb54469fac950548c51ba, type: 3}
+  - {fileID: 8300000, guid: e94ac8917f5132d478857d04c673d09a, type: 3}
+  - {fileID: 8300000, guid: b68a2841de4973d46b6fb96f275da821, type: 3}
+  - {fileID: 8300000, guid: c3fa4cb26e5ee7d4b888d12a2f6074ae, type: 3}
+  - {fileID: 8300000, guid: 67dbc835ffb292b4694ea1ab6c5bbc33, type: 3}
+  - {fileID: 8300000, guid: 97f51895156263044a747bae31d69cb5, type: 3}
+  - {fileID: 8300000, guid: cf4a831715d096e4898f70e1c2582708, type: 3}
+  - {fileID: 8300000, guid: 881786bd07fb85a47adfaf16f6a8f4f7, type: 3}
+  - {fileID: 8300000, guid: 480c058dcb941fd46964f63f47fb47ca, type: 3}
+  - {fileID: 8300000, guid: 1924c97cfd9170d45a2f1286d5b196c8, type: 3}
+  footstepCD: 0.35
 --- !u!1 &144443233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2327418456508348254, guid: 212f6a7f0433d0e4ab3e929121663729,

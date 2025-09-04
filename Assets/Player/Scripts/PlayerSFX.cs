@@ -9,6 +9,9 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip landSound;
 
+    [SerializeField] private List<AudioClip> footsteps;
+    [SerializeField] private float footstepCD;
+    private float lastFootstepTimeStamp;
 
     void Start()
     {
@@ -18,9 +21,15 @@ public class PlayerSFX : MonoBehaviour
         PlayerJumpBehaviour.OnPlayerLand.AddListener(() => SFXManager.Instance.PlaySFX(landSound));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (PlayerStateMachine.Instance.currentBehaviour.GetBehaviourType() == BehaviourType.Run && PlayerStateMachine.Instance.rb.velocity.magnitude > 0.1 && Time.time - lastFootstepTimeStamp > footstepCD)
+            Footsteps();
+    }
+
+    public void Footsteps()
+    {
+        SFXManager.Instance.PlayRandomSFX(footsteps.ToArray());
+        lastFootstepTimeStamp = Time.time;
     }
 }

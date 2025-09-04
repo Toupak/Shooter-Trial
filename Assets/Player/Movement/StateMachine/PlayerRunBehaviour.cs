@@ -47,6 +47,8 @@ public class PlayerRunBehaviour : IPlayerBehaviour
             player.velocityDirection.x = Mathf.MoveTowards(player.velocityDirection.x, moveDirection.x, player.data.groundAcceleration * Time.fixedDeltaTime);
             player.velocityDirection.z = Mathf.MoveTowards(player.velocityDirection.z, moveDirection.z, player.data.groundAcceleration * Time.fixedDeltaTime);
         }
+
+        
     }
 
     public void StopBehaviour(PlayerStateMachine player, BehaviourType next)
