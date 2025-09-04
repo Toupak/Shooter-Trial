@@ -35,14 +35,12 @@ public class RifleShoot : MonoBehaviour
     [SerializeField] private float muzzleFlashSizeCoefficient;
 
     private Squeeze_and_Stretch squeeze;
-    private Blink blink;
     private float lastShootTimeStamp;
     private float hasStartedshootingTimeStamp;
 
     private void Start()
     {
         squeeze = GetComponent<Squeeze_and_Stretch>();
-        blink = GetComponent<Blink>();
     }
 
     void Update()
@@ -88,7 +86,7 @@ public class RifleShoot : MonoBehaviour
             if (hitInfo.transform.CompareTag("Target"))
             {
                 squeeze.Trigger();
-                blink.Trigger();
+                hitInfo.collider.GetComponent<EnemyHealth>().TakeDamage();
                 Debug.Log("Target was hit");
             }
         }
@@ -131,5 +129,5 @@ public class RifleShoot : MonoBehaviour
         Destroy(muzzleFlash, 0.25f);
     }
 
-    //arme qui bouge quand tire / en movement
+    //arme qui bouge / en movement
 }

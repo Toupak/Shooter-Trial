@@ -192,4 +192,9 @@ public static class Tools
     {
         return (other - position).magnitude;
     }
+
+    public static Color ToAlpha(this Color color, float alpha)
+    {
+        return new Color(color.r, color.g, color.b, alpha);
+    }
 }
