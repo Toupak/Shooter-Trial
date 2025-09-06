@@ -5,20 +5,15 @@ using UnityEngine;
 
 public class UI_Magazine : MonoBehaviour
 {
-    private Magazine magazine;
-
     [SerializeField] private TextMeshProUGUI ammoDisplay;
 
-    private IEnumerator Start()
+    private void Awake()
     {
-        yield return (0.1f);
-
-        magazine = GetComponent<Magazine>();
-        UpdateUI();
+        Magazine.OnUpdateAmmoCount.AddListener(UpdateUI);
     }
 
-    public void UpdateUI()
+    public void UpdateUI(int ammo, int magazineSize)
     {
-        ammoDisplay.text = $"{magazine.BulletsLeft}/{magazine.MagazineSize}";
+        ammoDisplay.text = $"{ammo}/{magazineSize}";
     }
 }

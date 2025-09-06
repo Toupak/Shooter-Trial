@@ -46,6 +46,11 @@ public static class Tools
         return RadianToVector2(degree * Mathf.Deg2Rad).normalized * length;
     }
 
+    public static float DegreeToRadian(float degrees)
+    {
+        return (Mathf.PI / 180.0f) * degrees;
+    }
+
     public static Vector2 AddAngleToDirection(this Vector2 direction, float angle)
     {
         float directionAngle = DirectionToDegree(direction);

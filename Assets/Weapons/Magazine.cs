@@ -8,14 +8,13 @@ public class Magazine : MonoBehaviour
 {
     [HideInInspector] public static UnityEvent OnPlayerReload = new UnityEvent();
     [HideInInspector] public static UnityEvent OnPlayerEmptyShoot = new UnityEvent();
+    [HideInInspector] public static UnityEvent<int, int> OnUpdateAmmoCount = new UnityEvent<int, int>();
 
     private RifleShoot weapon;
     private WeaponSFX weaponSFX;
     [SerializeField] UI_Magazine ammoDisplay;
 
-
     [SerializeField] private int magazineSize;
-    public int MagazineSize => magazineSize;
     [SerializeField] private float reloadTime;
     public float ReloadTime => reloadTime;
 
@@ -33,6 +32,7 @@ public class Magazine : MonoBehaviour
         RifleShoot.OnPlayerShoot.AddListener((_,_) => UseAmmo());
 
         bulletsLeft = magazineSize;
+        OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
     }
 
     void Update()
@@ -47,20 +47,23 @@ public class Magazine : MonoBehaviour
     public void UseAmmo()
     {
         bulletsLeft -= 1;
-        ammoDisplay.UpdateUI();
+        OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
     }
 
     private IEnumerator Reload()
     {
-        OnPlayerReload.Invoke();
-        
         isReloading = true;
+
+        OnPlayerReload.Invoke();
+
         yield return new WaitForSeconds(reloadTime);
 
         while (weaponSFX.ReloadSoundIsPlaying == true)
             yield return null;
 
         bulletsLeft = magazineSize;
+        OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
+
         isReloading = false;
     }
 }

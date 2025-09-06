@@ -44,8 +44,6 @@ public class RifleShoot : MonoBehaviour
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private float muzzleFlashSizeCoefficient;
 
-
-
     private void Start()
     {
         squeeze = GetComponent<Squeeze_and_Stretch>();
