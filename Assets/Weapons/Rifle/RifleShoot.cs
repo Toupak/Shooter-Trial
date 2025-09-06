@@ -22,8 +22,15 @@ public class RifleShoot : MonoBehaviour
     public bool IsShooting => isShooting;
 
     [Header("WeaponProperties")]
-    [SerializeField] private float spreadxIntensity;
-    [SerializeField] private float spreadyIntensity;
+    private float spreadxIntensity;
+    private float spreadyIntensity;
+
+    [SerializeField] private float spreadxIntensityHipfire;
+    [SerializeField] private float spreadyIntensityHipfire;
+
+    [SerializeField] private float spreadxIntensityADS;
+    [SerializeField] private float spreadyIntensityADS;
+
     [SerializeField] private float returnRecoilDuration;
     [SerializeField] private float fullRecoilDuration;
     [SerializeField] private float returnSpeed;
@@ -48,6 +55,12 @@ public class RifleShoot : MonoBehaviour
     {
         squeeze = GetComponent<Squeeze_and_Stretch>();
         magazine = GetComponent<Magazine>();
+
+        spreadxIntensity = spreadxIntensityHipfire;
+        spreadyIntensity = spreadyIntensityHipfire;
+
+        ADS.OnPlayerStartAiming.AddListener(StartAimingStats);
+        ADS.OnPlayerEndAiming.AddListener(StopAimingStats);
     }
 
     void Update()
@@ -138,5 +151,15 @@ public class RifleShoot : MonoBehaviour
         Destroy(muzzleFlash, 0.25f);
     }
 
-    //arme qui bouge / en movement
+    private void StartAimingStats()
+    {
+        spreadxIntensity = spreadxIntensityADS;
+        spreadyIntensity = spreadyIntensityADS;
+    }
+
+    private void StopAimingStats()
+    {
+        spreadxIntensity = spreadxIntensityHipfire;
+        spreadyIntensity = spreadyIntensityHipfire;
+    }
 }

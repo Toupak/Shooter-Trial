@@ -4,21 +4,39 @@ using UnityEngine;
 
 public class RifleAnimation : MonoBehaviour
 {
-    [Header("Recoil")]
-    [SerializeField] private float kickbackDistance;
-    [SerializeField] private float knockupDistance;
+    private Quaternion startingRotation;
+    private Vector3 startingPosition;
 
+    private float kickbackDistance;
+    private float knockUpAngle;
+
+    [Header("ADS")]
+    [SerializeField] private Transform ADSTransform;
+    [SerializeField] private float aimOffset;
+
+    private ADS ads;
+
+    [SerializeField] private float kickbackDistanceADS;
+    [SerializeField] private float knockUpAngleADS;
+
+    [Header("Recoil")]
     [SerializeField] private float returnSpeed;
     [SerializeField] private float returnSpeedRotation;
 
-    private float targetxrotation;
-    private float currentxrotation;
+    private Quaternion targetRotation;
+    private Quaternion currentRotation;
 
-    [Space]
     [Header("Bobbing")]
+    [SerializeField] private float kickbackDistanceHipfire;
+    [SerializeField] private float knockUpAngleHipfire;
+
     private RifleShoot weapon;
 
-    private Vector3 startingPosition;
+    private Vector3 startingHipfirePosition;
+    private Quaternion startingHipfireRotation;
+
+
+
     private Vector3 targetPosition;
     private Vector3 velocity;
 
@@ -41,23 +59,31 @@ public class RifleAnimation : MonoBehaviour
 
     void Start()
     {
-        //Bobbing
         startingPosition = transform.localPosition;
+        startingRotation = transform.localRotation;
+
+        startingHipfirePosition = transform.localPosition;
+        startingHipfireRotation = transform.localRotation;
+
+        kickbackDistance = kickbackDistanceHipfire;
+        knockUpAngle = knockUpAngleHipfire;
+
         weapon = GetComponent<RifleShoot>();
+        ads = GetComponent<ADS>();
 
         RifleShoot.OnPlayerShoot.AddListener((_, _) => DoRifleShootAnimation());
+        ADS.OnPlayerStartAiming.AddListener(AimingAnimation);
+        ADS.OnPlayerEndAiming.AddListener(StopAimingAnimation);
 
-        targetxrotation = transform.localRotation.x;
-        currentxrotation = transform.localRotation.x;
+        targetRotation = startingRotation;
+        currentRotation = startingRotation;
     }
 
     void Update()
     {
         //Recoil
-        //targetPosition.z = Mathf.MoveTowards(targetPosition.z, targetzposition, returnSpeed * Time.deltaTime);
-        currentxrotation = Mathf.MoveTowards(currentxrotation, targetxrotation, returnSpeedRotation * Time.deltaTime);
-
-        transform.localRotation = Quaternion.Euler(currentxrotation, 0, 0);
+        currentRotation = Quaternion.RotateTowards(currentRotation, targetRotation, returnSpeedRotation * Time.deltaTime);
+        transform.localRotation = currentRotation;
 
         //Bobbing
         UpdateTimersCosSin();
@@ -72,6 +98,11 @@ public class RifleAnimation : MonoBehaviour
 
     private void ComputeTargetPositionFromState()
     {
+        if (ads.IsAiming)
+        {
+            return;
+        }
+
         //Shooting
         if (weapon.IsShooting)
         {
@@ -136,6 +167,30 @@ public class RifleAnimation : MonoBehaviour
     private void DoRifleShootAnimation()
     {
         transform.localPosition = startingPosition - Vector3.forward * kickbackDistance;
-        currentxrotation = targetxrotation - knockupDistance;
+        currentRotation = startingRotation * Quaternion.Euler(knockUpAngle, 0, 0);
+    }
+
+    private void AimingAnimation()
+    {
+        targetPosition = ADSTransform.localPosition;
+        targetRotation = ADSTransform.localRotation;
+
+        startingPosition = ADSTransform.localPosition;
+        startingRotation = ADSTransform.localRotation;
+
+        kickbackDistance = kickbackDistanceADS;
+        knockUpAngle = knockUpAngleADS;
+    }
+
+    private void StopAimingAnimation()
+    {
+        startingPosition = startingHipfirePosition;
+        startingRotation = startingHipfireRotation;
+
+        targetPosition = startingPosition;
+        targetRotation = startingRotation;
+
+        kickbackDistance = kickbackDistanceHipfire;
+        knockUpAngle = knockUpAngleHipfire;
     }
 }

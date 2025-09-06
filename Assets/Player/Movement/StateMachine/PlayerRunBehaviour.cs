@@ -11,10 +11,10 @@ public class PlayerRunBehaviour : IPlayerBehaviour
 
     public void UpdateBehaviour(PlayerStateMachine player)
     {
-        if (player.jumpBehaviour.CanJump(player) && player.input.GetJumpInput(false))
+        if (player.jumpBehaviour.CanJump(player) && player.input.GetJumpInput())
             player.jumpBehaviour.StartJump(player);
 
-        if (player.dashBehaviour.CanDash(player) && player.input.GetDashInput(false))
+        if (player.dashBehaviour.CanDash(player) && player.input.GetDashInput())
             player.ChangeBehaviour(player.dashBehaviour);
     }
 

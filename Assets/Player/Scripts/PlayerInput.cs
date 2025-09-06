@@ -74,14 +74,8 @@ public class PlayerInput : MonoBehaviour
         return mouse;
     }
 
-    public bool GetJumpInput(bool useBuffer = true)
+    public bool GetJumpInput()
     {
-        if (useBuffer && Time.time <= jumpTimeStamp)
-        {
-            jumpTimeStamp = -1.0f;
-            return true;
-        }
-
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)
@@ -90,14 +84,8 @@ public class PlayerInput : MonoBehaviour
             return false;
     }
 
-    public bool GetDashInput(bool useBuffer = true)
+    public bool GetDashInput()
     {
-        if (useBuffer && Time.time <= dashTimeStamp)
-        {
-            dashTimeStamp = -1.0f;
-            return true;
-        }
-
         if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)
@@ -106,29 +94,27 @@ public class PlayerInput : MonoBehaviour
             return false;
     }
 
-    public bool GetShootInput(bool useBuffer = true)
+    public bool GetShootInput()
     {
-        if (useBuffer && Time.time <= dashTimeStamp)
-        {
-            dashTimeStamp = -1.0f;
-            return true;
-        }
-
         if (Mouse.current.leftButton.isPressed)
             return true;
         else if (Gamepad.current != null)
-            return Gamepad.current.rightTrigger.wasPressedThisFrame;
+            return Gamepad.current.rightTrigger.isPressed;
         else
             return false;
     }
-    public bool GetReloadInput(bool useBuffer = true)
+    public bool GetAimInput()
     {
-        if (useBuffer && Time.time <= dashTimeStamp)
-        {
-            dashTimeStamp = -1.0f;
+        if (Mouse.current.rightButton.isPressed)
             return true;
-        }
+        else if (Gamepad.current != null)
+            return Gamepad.current.leftTrigger.isPressed;
+        else
+            return false;
+    }
 
+    public bool GetReloadInput()
+    {
         if (Keyboard.current.rKey.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)

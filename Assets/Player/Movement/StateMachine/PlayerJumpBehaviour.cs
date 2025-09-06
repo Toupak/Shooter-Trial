@@ -20,10 +20,10 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
 
     public void UpdateBehaviour(PlayerStateMachine player)
     {
-        if (timesJumped < 2 && player.input.GetJumpInput(false))
+        if (timesJumped < 2 && player.input.GetJumpInput())
             StartJump(player);
 
-        if (player.dashBehaviour.CanDash(player) && player.input.GetDashInput(false))
+        if (player.dashBehaviour.CanDash(player) && player.input.GetDashInput())
             player.ChangeBehaviour(player.dashBehaviour);
     }
 
