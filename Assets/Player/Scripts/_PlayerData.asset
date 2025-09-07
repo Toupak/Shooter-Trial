@@ -19,7 +19,7 @@ MonoBehaviour:
   joystickSensitivityX: 10000
   joystickSensitivityY: 5000
   hipFireSpeed: 18
-  ADSSpeed: 0
+  ADSSpeed: 10
   groundAcceleration: 120
   groundDeceleration: 80
   airControlMultiplier: 45

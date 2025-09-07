@@ -21,7 +21,7 @@ public class ADS : MonoBehaviour
 
     void Update()
     {
-        if (PlayerStateMachine.Instance.input.GetAimInput())
+        if (PlayerStateMachine.Instance.input.GetAimInput() && isAiming == false)
             StartAiming();
 
         if (Mouse.current.rightButton.wasReleasedThisFrame)

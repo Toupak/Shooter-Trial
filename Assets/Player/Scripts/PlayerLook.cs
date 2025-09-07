@@ -33,7 +33,7 @@ public class PlayerLook : MonoBehaviour
     //PlayerRecoil Camera
     private List<RecoilBuffer> recoilBuffers = new List<RecoilBuffer>();
 
-    [SerializeField] private float cameraMovingSpeedOnShoot;
+    private float cameraMovingSpeedOnShoot;
     
     private float targetxOffset;
     private float targetyOffset;
