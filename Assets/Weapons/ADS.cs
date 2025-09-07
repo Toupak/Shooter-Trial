@@ -6,17 +6,6 @@ using UnityEngine.InputSystem;
 
 public class ADS : MonoBehaviour
 {
-    //Animation - placer le gun au bon endroit
-    //ADS When click droit isPressed
-    //Modif de la vitesse de running - modif du spread de l'arme - peut resserrer le crosshair si besoin ?
-
-    //Booléen isADS
-    //Event OnStartADS - OnEndADS qui communique avec le reste -- vient modifier spread Intensity - hipfireSpread // ADSSpread
-    //Autres scripts qui ne vont pas se faire
-
-    //Recoil Anim spécifique pour ADS
-    //faire disparaitre le rond blanc ?
-
     [HideInInspector] public static UnityEvent OnPlayerStartAiming = new UnityEvent();
     [HideInInspector] public static UnityEvent OnPlayerEndAiming = new UnityEvent();
 
@@ -43,6 +32,7 @@ public class ADS : MonoBehaviour
     {
         isAiming = true;
         OnPlayerStartAiming.Invoke();
+
         crosshair.SetActive(false);
     }
 
@@ -50,6 +40,7 @@ public class ADS : MonoBehaviour
     {
         isAiming = false;
         OnPlayerEndAiming.Invoke();
+
         crosshair.SetActive(true);
     }
 }

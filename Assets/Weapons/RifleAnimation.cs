@@ -35,8 +35,6 @@ public class RifleAnimation : MonoBehaviour
     private Vector3 startingHipfirePosition;
     private Quaternion startingHipfireRotation;
 
-
-
     private Vector3 targetPosition;
     private Vector3 velocity;
 
@@ -69,7 +67,7 @@ public class RifleAnimation : MonoBehaviour
         knockUpAngle = knockUpAngleHipfire;
 
         weapon = GetComponent<RifleShoot>();
-        ads = GetComponent<ADS>();
+        ads = PlayerStateMachine.Instance.GetComponent<ADS>();
 
         RifleShoot.OnPlayerShoot.AddListener((_, _) => DoRifleShootAnimation());
         ADS.OnPlayerStartAiming.AddListener(AimingAnimation);

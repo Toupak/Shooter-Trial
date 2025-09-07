@@ -14,7 +14,8 @@ public class PlayerData : ScriptableObject
     public float joystickSensitivityY;
 
     [Header("Run Variables")]
-    public float speed;
+    public float hipFireSpeed;
+    public float ADSSpeed;
     public float groundAcceleration;
     public float groundDeceleration;
 

@@ -17,6 +17,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform cameraOrientation;
     
     [HideInInspector] public PlayerInput input;
+    [HideInInspector] public ADS ads;
 
     [HideInInspector] public Vector3 inputDirection;
     [HideInInspector] public Vector3 velocityDirection;
@@ -34,6 +35,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInput>();
+        ads = GetComponent<ADS>();
 
         currentBehaviour = runBehaviour;
         currentBehaviour.StartBehaviour(this, BehaviourType.Run); 
@@ -68,5 +70,10 @@ public class PlayerStateMachine : MonoBehaviour
     public void ApplyMovement()
     {
         rb.velocity = velocityDirection;
+    }
+
+    public float ComputeSpeed()
+    {
+        return ads.IsAiming ? data.ADSSpeed : data.hipFireSpeed;
     }
 }

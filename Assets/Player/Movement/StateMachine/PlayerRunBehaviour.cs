@@ -35,7 +35,7 @@ public class PlayerRunBehaviour : IPlayerBehaviour
     private void MovePlayer(PlayerStateMachine player)
     {
         Vector3 moveDirection = (player.orientation.forward * player.inputDirection.z + player.orientation.right * player.inputDirection.x).normalized;
-        moveDirection *= player.data.speed;
+        moveDirection *= player.ComputeSpeed();
 
         if (player.inputDirection.magnitude <= 0.1f)
         {
