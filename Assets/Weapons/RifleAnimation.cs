@@ -50,6 +50,9 @@ public class RifleAnimation : MonoBehaviour
     [SerializeField] private float gunAnimationSpeedRun;
     [SerializeField] private float gunAnimationDistanceRun;
 
+    [SerializeField] private float gunAnimationSpeedADS;
+    [SerializeField] private float gunAnimationDistanceADS;
+
     [SerializeField] private float jumpOffset;
     [SerializeField] private float dashOffset;
 
@@ -98,6 +101,13 @@ public class RifleAnimation : MonoBehaviour
     {
         if (ads.IsAiming)
         {
+            gunAnimationSpeed = gunAnimationSpeedADS;
+            gunAnimationDistance = gunAnimationDistanceADS;
+
+            float x = Mathf.Sin(Tools.DegreeToRadian(sinTimer * gunAnimationSpeed)) * gunAnimationDistance;
+            float y = Mathf.Cos(Tools.DegreeToRadian(cosTimer * gunAnimationSpeed)) * gunAnimationDistance;
+
+            SetTargetPosition(new Vector3(x, y, 0));
             return;
         }
 

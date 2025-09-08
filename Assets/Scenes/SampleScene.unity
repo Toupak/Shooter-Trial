@@ -7900,9 +7900,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adsFOV: 50
   transitionTime: 75
-  dashFOV: 40
-  dashFOVDuration: 0.1
-  dashFOVSnappiness: 75
 --- !u!1 &331832828 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5211105591727532572, guid: 212f6a7f0433d0e4ab3e929121663729,
@@ -8001,6 +7998,16 @@ PrefabInstance:
         type: 3}
       propertyPath: knockUpAngleHipfire
       value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423502742028875639, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      propertyPath: gunAnimationSpeedADS
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423502742028875639, guid: d32892c82a841e34bb692140d685dcfc,
+        type: 3}
+      propertyPath: gunAnimationDistanceADS
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 1423502742028875639, guid: d32892c82a841e34bb692140d685dcfc,
         type: 3}
@@ -8134,6 +8141,76 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1908337193}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &367848656
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367848652}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.29
+  m_Height: 3.5
+  m_Direction: 0
+  m_Center: {x: 0, y: 2.21, z: 0}
+--- !u!136 &367848657
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367848652}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 3.95
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.75, z: 0}
+--- !u!114 &367848658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367848652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e254388fdc56d249914342ff4f5fa68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairOnHit: {fileID: 313412639}
+  fadeDuration: 0.5
+  hurtSounds:
+  - {fileID: 8300000, guid: 00a01521c7abed645ad6a35980d6b1f4, type: 3}
+  - {fileID: 8300000, guid: b847be5e9c0ca6f4fbb8d9762d16b6b6, type: 3}
+  - {fileID: 8300000, guid: d941862e0334b9c4c97514ea2de904cb, type: 3}
+  - {fileID: 8300000, guid: b35462d670c03734ea33c3269f006220, type: 3}
+  - {fileID: 8300000, guid: e6680b334c88abf4393b1582d2e76c32, type: 3}
+  - {fileID: 8300000, guid: 143f68f44b5c6f641bd5a74d0b678a32, type: 3}
+  - {fileID: 8300000, guid: b544aa30e8c843a4fa84ba56cc6a51ba, type: 3}
+  - {fileID: 8300000, guid: 9044cc7dbb26ae548b012860d8d3acf0, type: 3}
+  hurtVolume: 0.07
 --- !u!1 &368840684 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2863824617744280223, guid: c131e6216dbac04439ca08c706a64afe,
@@ -21595,6 +21672,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 367848654}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8568c7d34b2a6da4ea31dd728482d449,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 367848657}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8568c7d34b2a6da4ea31dd728482d449,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 367848656}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8568c7d34b2a6da4ea31dd728482d449,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 367848658}
   m_SourcePrefab: {fileID: 100100000, guid: 8568c7d34b2a6da4ea31dd728482d449, type: 3}
 --- !u!1 &1923522024 stripped
 GameObject:
