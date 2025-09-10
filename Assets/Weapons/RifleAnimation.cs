@@ -30,7 +30,7 @@ public class RifleAnimation : MonoBehaviour
     [SerializeField] private float kickbackDistanceHipfire;
     [SerializeField] private float knockUpAngleHipfire;
 
-    private RifleShoot weapon;
+    private Weapon weapon;
 
     private Vector3 startingHipfirePosition;
     private Quaternion startingHipfireRotation;
@@ -69,10 +69,10 @@ public class RifleAnimation : MonoBehaviour
         kickbackDistance = kickbackDistanceHipfire;
         knockUpAngle = knockUpAngleHipfire;
 
-        weapon = GetComponent<RifleShoot>();
+        weapon = GetComponent<Weapon>();
         ads = PlayerStateMachine.Instance.GetComponent<ADS>();
 
-        RifleShoot.OnPlayerShoot.AddListener((_, _) => DoRifleShootAnimation());
+        Weapon.OnPlayerShoot.AddListener((_, _) => DoRifleShootAnimation());
         ADS.OnPlayerStartAiming.AddListener(AimingAnimation);
         ADS.OnPlayerEndAiming.AddListener(StopAimingAnimation);
 

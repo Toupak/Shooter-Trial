@@ -53,7 +53,7 @@ public class PlayerLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        RifleShoot.OnPlayerShoot.AddListener((spreadx, spready) =>
+        Weapon.OnPlayerShoot.AddListener((spreadx, spready) =>
         {
             currentxOffset = xRotation;
             currentyOffset = yRotation;
@@ -62,7 +62,7 @@ public class PlayerLook : MonoBehaviour
             targetyOffset = currentyOffset + spready;
         });
 
-        RifleShoot.OnPlayerStartShooting.AddListener((snapiness) =>
+        Weapon.OnPlayerStartShooting.AddListener((snapiness) =>
         {
             onStopShootxOffset = 0;
             onStopShootyOffset = 0;
@@ -71,7 +71,7 @@ public class PlayerLook : MonoBehaviour
             recoilBuffers.Clear();
         });
 
-        RifleShoot.OnPlayerStopShooting.AddListener((returnSpeed, returnRecoilDuration) =>
+        Weapon.OnPlayerStopShooting.AddListener((returnSpeed, returnRecoilDuration) =>
         {
             currentxOffset = xRotation;
             currentyOffset = yRotation;

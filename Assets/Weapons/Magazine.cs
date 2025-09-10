@@ -10,7 +10,7 @@ public class Magazine : MonoBehaviour
     [HideInInspector] public static UnityEvent OnPlayerEmptyShoot = new UnityEvent();
     [HideInInspector] public static UnityEvent<int, int> OnUpdateAmmoCount = new UnityEvent<int, int>();
 
-    private RifleShoot weapon;
+    private Weapon weapon;
     private WeaponSFX weaponSFX;
     [SerializeField] UI_Magazine ammoDisplay;
 
@@ -26,10 +26,10 @@ public class Magazine : MonoBehaviour
 
     void Start()
     {
-        weapon = GetComponent<RifleShoot>();
+        weapon = GetComponent<Weapon>();
         weaponSFX = GetComponent<WeaponSFX>();
 
-        RifleShoot.OnPlayerShoot.AddListener((_,_) => UseAmmo());
+        Weapon.OnPlayerShoot.AddListener((_,_) => UseAmmo());
 
         bulletsLeft = magazineSize;
         OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
