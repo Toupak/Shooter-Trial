@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
         {
             CreateBulletImpactEffect(collision);
         }
+
+        Destroy(gameObject);
     }
 
     private void CreateBulletImpactEffect(Collision collision)
@@ -19,7 +21,6 @@ public class Bullet : MonoBehaviour
         ContactPoint contactPoint = collision.contacts[0];
 
         GameObject hole = Instantiate(bulletHole, contactPoint.point, Quaternion.LookRotation(-contactPoint.normal));
-
         hole.transform.SetParent(collision.gameObject.transform);
     }
 }

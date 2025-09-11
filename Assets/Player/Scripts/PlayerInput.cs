@@ -122,4 +122,13 @@ public class PlayerInput : MonoBehaviour
         else
             return false;
     }
+    public bool GetMeleeInput()
+    {
+        if (Keyboard.current.fKey.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.rightShoulder.isPressed;
+        else
+            return false;
+    }
 }
