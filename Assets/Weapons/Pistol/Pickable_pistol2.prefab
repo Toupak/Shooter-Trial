@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6787192574962886939}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BulletSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4656852305542366017}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StartingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3998164032968595213}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ADSGunPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,13 +104,11 @@ GameObject:
   - component: {fileID: 1287266876678040891}
   - component: {fileID: 3174765379448989961}
   - component: {fileID: 4951148089953108972}
-  - component: {fileID: 8367828026336357023}
-  - component: {fileID: 1438693648328641453}
-  - component: {fileID: 6814196635832694819}
-  - component: {fileID: 2127035653880803222}
-  m_Layer: 0
-  m_Name: pistol2
-  m_TagString: Untagged
+  - component: {fileID: -6892159130805006834}
+  - component: {fileID: 7623437366172386190}
+  m_Layer: 8
+  m_Name: Pickable_pistol2
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +123,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.503, y: 0.43551207, z: -0.412}
-  m_LocalScale: {x: 0.19999999, y: 0.2, z: 0.20000003}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3998164032968595213}
@@ -183,7 +181,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8367828026336357023
+--- !u!114 &-6892159130805006834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,105 +190,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 8747334351022515049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557f262bd85d24747a0402b885a6e920, type: 3}
+  m_Script: {fileID: 11500000, guid: a757fb7b1f5cb004e9c512249a047310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rpm: 450
-  isAuto: 0
-  spreadxIntensityHipfire: 1
-  spreadyIntensityHipfire: 6
-  spreadxIntensityADS: 0.5
-  spreadyIntensityADS: 3
-  returnRecoilDuration: 0.5
-  fullRecoilDuration: 1.5
-  returnSpeed: 65
-  snapiness: 45
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  shootingSounds:
-  - {fileID: 8300000, guid: 66210bd98ed62444eae753822b24ea0a, type: 3}
-  - {fileID: 8300000, guid: f760ced64f6c8534db7746c599bc7da4, type: 3}
-  - {fileID: 8300000, guid: 2cc0e59b42d53994ab0719e18c49443f, type: 3}
-  - {fileID: 8300000, guid: 0e49a9b982e76d946bd1685652e08fbd, type: 3}
-  bulletPrefab: {fileID: 3528423409980568453, guid: 819d380c5ed3d62478be26cd72f2564b,
-    type: 3}
-  bulletSpawnPosition: {fileID: 6787192574962886939}
-  bulletVelocity: 500
-  muzzleFlashPrefab: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc,
-    type: 3}
-  muzzleFlashSizeCoefficient: 0.3
---- !u!114 &1438693648328641453
+  realObjectPrefab: {fileID: 0}
+  isAimed: 0
+--- !u!114 &7623437366172386190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8747334351022515049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7546e958f41ef6f479c6061d1b64738d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magazineSize: 8
-  reloadTime: 0.8
---- !u!114 &6814196635832694819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8747334351022515049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec10d6849d428b4eb4069669c521628, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyMagazineSounds:
-  - {fileID: 8300000, guid: 69e1abcb9bf97614492dfb69c201cea3, type: 3}
-  - {fileID: 8300000, guid: 202ee3c74651c4b44b594d4a229dba31, type: 3}
-  - {fileID: 8300000, guid: f38fa9f408bde9445a6c0af1efe55ae7, type: 3}
-  - {fileID: 8300000, guid: e27aca5d123b2694f85897368b37648b, type: 3}
-  - {fileID: 8300000, guid: 81f7de91c0d62d14bb462e2d2ba98b91, type: 3}
-  startReloadingSounds:
-  - {fileID: 8300000, guid: d142176c86795984a926a552398d0df5, type: 3}
-  - {fileID: 8300000, guid: 782715491f870234ba0fdd0e7f241bbd, type: 3}
-  - {fileID: 8300000, guid: 323f348533c515f43be03e2b3cd5a88b, type: 3}
-  - {fileID: 8300000, guid: faead42723be6274e94eeeb2fceaeec9, type: 3}
-  - {fileID: 8300000, guid: bfc1f3a078a525b42a83fcf01d4001c9, type: 3}
-  - {fileID: 8300000, guid: 3b36db02c78d77d45b3b901084fa75ee, type: 3}
-  finishReloadingSounds:
-  - {fileID: 8300000, guid: 13ee007a95c0f2d41af68664a30be5ca, type: 3}
-  - {fileID: 8300000, guid: 30f9cc8807aa523409e3676abb41fdeb, type: 3}
-  - {fileID: 8300000, guid: 6be6f26407a48514199a89cfa5ff2f47, type: 3}
-  - {fileID: 8300000, guid: 99c5c85f81fec734ca5757b43a27d7f8, type: 3}
-  - {fileID: 8300000, guid: e0be1a2cbf39f0e408c90dbc129edbd8, type: 3}
---- !u!114 &2127035653880803222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8747334351022515049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a194125308b6ef24f8fc9985acb58dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ADSTransform: {fileID: 3998164032968595213}
-  aimOffset: 0
-  kickbackDistanceADS: 0.02
-  knockUpAngleADS: -5
-  returnSpeed: 0.25
-  returnSpeedRotation: 100
-  kickbackDistanceHipfire: 0.2
-  knockUpAngleHipfire: -15
-  gunAnimationSpeedIdle: 75
-  gunAnimationDistanceIdle: 0.01
-  gunAnimationSpeedRun: 250
-  gunAnimationDistanceRun: 0.012
-  gunAnimationSpeedADS: 50
-  gunAnimationDistanceADS: 0.001
-  jumpOffset: 0.03
-  dashOffset: -0.1
-  gunAnimationSmoothTime: 0.1
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

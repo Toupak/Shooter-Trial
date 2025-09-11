@@ -10,7 +10,6 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public static UnityEvent<float> OnPlayerStartShooting = new UnityEvent<float>();
     [HideInInspector] public static UnityEvent<float, float> OnPlayerStopShooting = new UnityEvent<float, float>();
 
-    private Squeeze_and_Stretch squeeze;
     private Magazine magazine;
 
     [Header("WeaponStats")]
@@ -55,7 +54,6 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        squeeze = GetComponent<Squeeze_and_Stretch>();
         magazine = GetComponent<Magazine>();
 
         spreadxIntensity = spreadxIntensityHipfire;
@@ -113,8 +111,8 @@ public class Weapon : MonoBehaviour
         {
             if (hitInfo.transform.CompareTag("Target"))
             {
-                squeeze.Trigger();
                 hitInfo.collider.GetComponent<EnemyHealth>().TakeDamage();
+                //Squeeze est déclenché sur le crosshair depuis un Event OnEnemyTakeDamage
                 Debug.Log("Target was hit");
             }
         }

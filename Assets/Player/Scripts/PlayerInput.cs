@@ -124,6 +124,16 @@ public class PlayerInput : MonoBehaviour
     }
     public bool GetMeleeInput()
     {
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.yButton.isPressed;
+        else
+            return false;
+    }
+
+    public bool GetInteractInput()
+    {
         if (Keyboard.current.fKey.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)

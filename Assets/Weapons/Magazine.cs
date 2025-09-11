@@ -12,7 +12,6 @@ public class Magazine : MonoBehaviour
 
     private Weapon weapon;
     private WeaponSFX weaponSFX;
-    [SerializeField] UI_Magazine ammoDisplay;
 
     [SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime;
