@@ -25,7 +25,7 @@ public class PickableObject : MonoBehaviour
         }
     }
 
-    public GameObject PickWeapon()
+    public GameObject PickUpObject()
     {
         return realObjectPrefab;
     }

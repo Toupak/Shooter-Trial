@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a194125308b6ef24f8fc9985acb58dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingTransform: {fileID: 6643273081212421451}
   ADSTransform: {fileID: 2966337880744004530}
   aimOffset: 0
   kickbackDistanceADS: 0.01

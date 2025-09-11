@@ -10,8 +10,12 @@ public class RifleAnimation : MonoBehaviour
     private float kickbackDistance;
     private float knockUpAngle;
 
-    [Header("ADS")]
+    [Header("StartingPositions")]
+    [SerializeField] private Transform StartingTransform;
     [SerializeField] private Transform ADSTransform;
+
+
+    [Header("ADS")]
     [SerializeField] private float aimOffset;
 
     private ADS ads;
@@ -60,6 +64,9 @@ public class RifleAnimation : MonoBehaviour
 
     void Start()
     {
+        transform.localPosition = StartingTransform.localPosition;
+        transform.localRotation = StartingTransform.localRotation;
+
         startingPosition = transform.localPosition;
         startingRotation = transform.localRotation;
 
