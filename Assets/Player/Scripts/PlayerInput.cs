@@ -147,7 +147,7 @@ public class PlayerInput : MonoBehaviour
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)
-            return Gamepad.current.rightShoulder.isPressed;
+            return Gamepad.current.rightStickButton.isPressed;
         else
             return false;
     }
@@ -157,7 +157,7 @@ public class PlayerInput : MonoBehaviour
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
             return true;
         else if (Gamepad.current != null)
-            return Gamepad.current.rightShoulder.isPressed;
+            return Gamepad.current.leftStickButton.isPressed;
         else
             return false;
     }
