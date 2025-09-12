@@ -12,8 +12,11 @@ public class Magazine : MonoBehaviour
 
     private Weapon weapon;
     private WeaponSFX weaponSFX;
+    private Coroutine reload;
 
     [SerializeField] private int magazineSize;
+    public int MagazineSize => magazineSize;
+
     [SerializeField] private float reloadTime;
     public float ReloadTime => reloadTime;
 
@@ -30,6 +33,9 @@ public class Magazine : MonoBehaviour
 
         Weapon.OnPlayerShoot.AddListener((_,_) => UseAmmo());
 
+        Melee.OnPlayerMelee.AddListener(CancelReload);
+        WeaponHolder.OnPlayerSwitchWeapon.AddListener((_) => CancelReload());
+
         bulletsLeft = magazineSize;
         OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
     }
@@ -37,7 +43,7 @@ public class Magazine : MonoBehaviour
     void Update()
     {
         if (magazineSize != bulletsLeft && PlayerStateMachine.Instance.input.GetReloadInput() && isReloading == false && weapon.IsShooting == false)
-            StartCoroutine(Reload());
+            reload = StartCoroutine(Reload());
 
         if (bulletsLeft <= 0 && isReloading == false && Mouse.current.leftButton.wasPressedThisFrame)
             OnPlayerEmptyShoot.Invoke();
@@ -64,5 +70,15 @@ public class Magazine : MonoBehaviour
         OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
 
         isReloading = false;
+    }
+
+    private void CancelReload()
+    {
+        if (reload != null)
+        {
+            StopAllCoroutines();
+            reload = null;
+            isReloading = false;
+        }
     }
 }

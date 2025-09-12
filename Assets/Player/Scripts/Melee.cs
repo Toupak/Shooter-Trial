@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Melee : MonoBehaviour
 {
-
+    [HideInInspector] public static UnityEvent OnPlayerMelee = new UnityEvent();
 
     [SerializeField] private GameObject gun;
     [SerializeField] private GameObject sword;
@@ -28,6 +29,7 @@ public class Melee : MonoBehaviour
     private IEnumerator Swipe()
     {
         isSwiping = true;
+        OnPlayerMelee.Invoke();
 
         gun.SetActive(false);
         sword.SetActive(true);

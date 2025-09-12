@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WeaponHolder : MonoBehaviour
 {
+    [HideInInspector] public static UnityEvent<GameObject> OnPlayerSwitchWeapon = new UnityEvent<GameObject>();
+
     [SerializeField] private GameObject slot1;
     [SerializeField] private GameObject slot2;
 
@@ -29,15 +32,11 @@ public class WeaponHolder : MonoBehaviour
         //A transformer dans un check booléen a part pour la lisibilité
         if (PlayerStateMachine.Instance.input.GetSlot1Input() && slot1.activeSelf == false && activeSlot != slot1)
         {
-            Debug.Log("1 is pressed");
             SwitchToWeaponSlot(slot1);
         }
 
         if (PlayerStateMachine.Instance.input.GetSlot2Input() && slot2.activeSelf == false && activeSlot != slot2)
-        {
-            Debug.Log("2 is pressed");
             SwitchToWeaponSlot(slot2);
-        }
     }
 
     private void PickUpWeapon(GameObject newWeapon)
@@ -51,6 +50,7 @@ public class WeaponHolder : MonoBehaviour
             slot2.SetActive(true);
 
             activeSlot = slot2;
+            OnPlayerSwitchWeapon.Invoke(GunToAssign);
         }
 
         if (slot1.activeSelf == true)
@@ -72,11 +72,12 @@ public class WeaponHolder : MonoBehaviour
 
     private void SwitchToWeaponSlot(GameObject slot)
     {
-        if (slot == activeSlot)
+        if (slot == activeSlot || slot.transform.childCount == 0)
             return;
 
         activeSlot.SetActive(false);
         activeSlot = slot;
         activeSlot.SetActive(true);
+        OnPlayerSwitchWeapon.Invoke(slot.transform.GetChild(0).gameObject);
     }
 }
