@@ -43,15 +43,16 @@ public class PlayerInteract : MonoBehaviour
             if (hoveredObject.GetComponent<PickableObject>() != null)
                 hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);    
 
-            //Null ref ici - quand j'arrête de viser après avoir pick up
-
             hoveredObject = null;
         }
 
         if (hoveredObject != null && hoveredObject.GetComponent<PickableObject>() != null && PlayerStateMachine.Instance.input.GetInteractInput())
         {
             OnPlayerPickUp.Invoke(hoveredObject.GetComponent<PickableObject>().PickUpObject());
-            hoveredObject.GetComponent<PickableObject>().isAimed = false;
+
+            isHovering = false;
+            hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
+
             hoveredObject = null;
         }
     }

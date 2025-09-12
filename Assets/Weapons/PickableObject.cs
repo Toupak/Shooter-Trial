@@ -19,7 +19,6 @@ public class PickableObject : MonoBehaviour
 
     public GameObject PickUpObject()
     {
-        //Se fait détruire
         return realObjectPrefab;
     }
 

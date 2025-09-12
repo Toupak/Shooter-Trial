@@ -141,4 +141,24 @@ public class PlayerInput : MonoBehaviour
         else
             return false;
     }
+
+    public bool GetSlot1Input()
+    {
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.rightShoulder.isPressed;
+        else
+            return false;
+    }
+
+    public bool GetSlot2Input()
+    {
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            return true;
+        else if (Gamepad.current != null)
+            return Gamepad.current.rightShoulder.isPressed;
+        else
+            return false;
+    }
 }

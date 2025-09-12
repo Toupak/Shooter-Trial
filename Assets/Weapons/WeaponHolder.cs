@@ -44,7 +44,5 @@ public class WeaponHolder : MonoBehaviour
             GameObject GunToAssign = Instantiate(newWeapon);
             GunToAssign.transform.SetParent(slot2.transform);
         }
-
-        //Check sur quel slot on est et remplace le gameObject
     }
 }
