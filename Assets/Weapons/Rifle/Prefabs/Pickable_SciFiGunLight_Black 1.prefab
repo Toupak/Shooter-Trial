@@ -162,7 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a757fb7b1f5cb004e9c512249a047310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realObjectPrefab: {fileID: 0}
+  realObjectPrefab: {fileID: 7658220749020036070, guid: d32892c82a841e34bb692140d685dcfc,
+    type: 3}
   isAimed: 0
 --- !u!114 &-4398831226126084480
 MonoBehaviour:

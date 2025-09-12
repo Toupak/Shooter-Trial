@@ -13,7 +13,6 @@ public class Melee : MonoBehaviour
     private bool isSwiping;
     //Sound & EnemyHealth
 
-
     void Start()
     {
         animator = sword.GetComponent<Animator>();

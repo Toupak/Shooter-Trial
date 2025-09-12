@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class PlayerInteract : MonoBehaviour
 {
+    [HideInInspector] public static UnityEvent<GameObject> OnPlayerPickUp = new UnityEvent<GameObject>();
+
     private GameObject hoveredObject;
 
     [SerializeField] private float interactDistance;
@@ -29,17 +33,25 @@ public class PlayerInteract : MonoBehaviour
             isHovering = true;
             hoveredObject = hitInfo.collider.gameObject;
 
-            if (hoveredObject.GetComponent<Outline>() != null)
-                hoveredObject.GetComponent<PickableObject>().isAimed = true;
-
+            if (hoveredObject.GetComponent<PickableObject>() != null)
+                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
         }
         else if (!hasHit && isHovering == true)
         {
             isHovering = false;
 
-            if (hoveredObject.GetComponent<Outline>() != null)
-                hoveredObject.GetComponent<PickableObject>().isAimed = false;    
+            if (hoveredObject.GetComponent<PickableObject>() != null)
+                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);    
 
+            //Null ref ici - quand j'arrête de viser après avoir pick up
+
+            hoveredObject = null;
+        }
+
+        if (hoveredObject != null && hoveredObject.GetComponent<PickableObject>() != null && PlayerStateMachine.Instance.input.GetInteractInput())
+        {
+            OnPlayerPickUp.Invoke(hoveredObject.GetComponent<PickableObject>().PickUpObject());
+            hoveredObject.GetComponent<PickableObject>().isAimed = false;
             hoveredObject = null;
         }
     }

@@ -9,29 +9,28 @@ public class PickableObject : MonoBehaviour
     private Outline outline;
 
     public bool isAimed;
-    private bool hasAimed;
+
+    //public enum : Weapon / ? -- Fais une action selon le type : ammo/enum/coffre/porte/...
 
     void Start()
     {
         outline = GetComponent<Outline>();
     }
 
-    void Update()
-    {
-        if (isAimed != hasAimed)
-        {
-            CastOutline();
-            hasAimed = !hasAimed;
-        }
-    }
-
     public GameObject PickUpObject()
     {
+        //Se fait détruire
         return realObjectPrefab;
     }
 
     private void CastOutline()
     {
-        outline.enabled = !outline.enabled;
+        outline.enabled = isAimed;
+    }
+
+    public void SetAimState(bool state)
+    {
+        isAimed = state;
+        CastOutline();
     }
 }

@@ -18,7 +18,12 @@ public class WeaponSFX : MonoBehaviour
     {
         magazine = GetComponent<Magazine>();
 
-        Magazine.OnPlayerReload.AddListener(() => StartCoroutine(ReloadSound()));
+        Magazine.OnPlayerReload.AddListener(() =>
+        {
+            if (gameObject.activeSelf == true)
+                StartCoroutine(ReloadSound());
+        });
+        
         Magazine.OnPlayerEmptyShoot.AddListener(() => SFXManager.Instance.PlayRandomSFX(emptyMagazineSounds.ToArray()));
     }
 
