@@ -48,10 +48,15 @@ public class PlayerInteract : MonoBehaviour
 
         if (hoveredObject != null && hoveredObject.GetComponent<PickableObject>() != null && PlayerStateMachine.Instance.input.GetInteractInput())
         {
-            OnPlayerPickUp.Invoke(hoveredObject.GetComponent<PickableObject>().PickUpObject());
+            OnPlayerPickUp.Invoke(hoveredObject.GetComponent<PickableObject>().GetGameObject());
 
             isHovering = false;
-            hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
+
+            if (hoveredObject.GetComponent<PickableObject>() != null)
+            {
+                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
+                hoveredObject.GetComponent<PickableObject>().DestroyOnPickUp();
+            }
 
             hoveredObject = null;
         }

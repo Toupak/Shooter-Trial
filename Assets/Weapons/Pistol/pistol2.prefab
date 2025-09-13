@@ -213,6 +213,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f760ced64f6c8534db7746c599bc7da4, type: 3}
   - {fileID: 8300000, guid: 2cc0e59b42d53994ab0719e18c49443f, type: 3}
   - {fileID: 8300000, guid: 0e49a9b982e76d946bd1685652e08fbd, type: 3}
+  pickableWeaponPrefab: {fileID: 8747334351022515049, guid: 918d43679a950e24e9806817924a4d58,
+    type: 3}
   bulletPrefab: {fileID: 3528423409980568453, guid: 819d380c5ed3d62478be26cd72f2564b,
     type: 3}
   bulletSpawnPosition: {fileID: 6787192574962886939}

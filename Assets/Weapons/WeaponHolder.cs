@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,11 +12,12 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] private GameObject slot1;
     [SerializeField] private GameObject slot2;
 
+    [SerializeField] private float yeetSpeed;
+
+    private GameObject activeWeapon;
     private GameObject activeSlot;
 
-    //Enregistrer les games object -> SetChild
-    //Faire en sorte que tu puisses swapper d'arme avec la molette et/ou 1 & 2 -> Nouveaux input qui font des events
-    //Communique aux autre scripts le changement d'arme
+    //Faire en sorte que tu puisses swapper d'arme avec la molette
 
     void Start()
     {
@@ -23,17 +25,15 @@ public class WeaponHolder : MonoBehaviour
         slot2.SetActive(false);
 
         activeSlot = slot1;
+        activeWeapon = activeSlot.transform.GetChild(0).gameObject;
 
         PlayerInteract.OnPlayerPickUp.AddListener(PickUpWeapon);
     }
 
     void Update()
     {
-        //A transformer dans un check booléen a part pour la lisibilité
         if (PlayerStateMachine.Instance.input.GetSlot1Input() && slot1.activeSelf == false && activeSlot != slot1)
-        {
             SwitchToWeaponSlot(slot1);
-        }
 
         if (PlayerStateMachine.Instance.input.GetSlot2Input() && slot2.activeSelf == false && activeSlot != slot2)
             SwitchToWeaponSlot(slot2);
@@ -50,23 +50,28 @@ public class WeaponHolder : MonoBehaviour
             slot2.SetActive(true);
 
             activeSlot = slot2;
+            activeWeapon = GunToAssign;
+
             OnPlayerSwitchWeapon.Invoke(GunToAssign);
+            return;
         }
 
         if (slot1.activeSelf == true)
         {
-            Destroy(slot1.transform.GetChild(0).gameObject);
+            TossCurrentWeapon(activeWeapon);
 
             GameObject GunToAssign = Instantiate(newWeapon);
             GunToAssign.transform.SetParent(slot1.transform);
+            activeWeapon = GunToAssign;
         }
 
         if (slot2.activeSelf == true)
         {
-            Destroy(slot2.transform.GetChild(0).gameObject);
+            TossCurrentWeapon(activeWeapon);
 
             GameObject GunToAssign = Instantiate(newWeapon);
             GunToAssign.transform.SetParent(slot2.transform);
+            activeWeapon = GunToAssign;
         }
     }
 
@@ -77,7 +82,27 @@ public class WeaponHolder : MonoBehaviour
 
         activeSlot.SetActive(false);
         activeSlot = slot;
+
+        activeWeapon = slot.transform.GetChild(0).transform.gameObject;
         activeSlot.SetActive(true);
-        OnPlayerSwitchWeapon.Invoke(slot.transform.GetChild(0).gameObject);
+
+        OnPlayerSwitchWeapon.Invoke(activeWeapon);
+    }
+
+    private void TossCurrentWeapon(GameObject currentWeapon)
+    {
+        if (activeWeapon.GetComponent<Weapon>().pickableWeaponPrefab != null)
+        {
+            GameObject weaponToToss = Instantiate(activeWeapon.GetComponent<Weapon>().pickableWeaponPrefab, transform.position, Quaternion.identity);
+
+            Vector3 cameraDirection = PlayerStateMachine.Instance.cameraOrientation.forward;
+            weaponToToss.GetComponent<Rigidbody>().velocity = cameraDirection * yeetSpeed;
+        }
+
+        Destroy(activeWeapon);
+
+        //On va chercher le pickableWeapon stocké dans le script Weapon de l'active Weapon.
+        //On instantie le pickable weapon qu'on lance avec une fonction depuis son script pickable Toss();
+        //ActiveWeapon -> Détruit
     }
 }

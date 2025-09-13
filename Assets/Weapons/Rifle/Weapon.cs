@@ -45,6 +45,8 @@ public class Weapon : MonoBehaviour
     [Header("WeaponConstruct")]
     [SerializeField] private List<AudioClip> shootingSounds;
 
+    public GameObject pickableWeaponPrefab;
+
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawnPosition;
     [SerializeField] private float bulletVelocity;

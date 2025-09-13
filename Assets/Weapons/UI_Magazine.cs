@@ -10,6 +10,7 @@ public class UI_Magazine : MonoBehaviour
     private void Awake()
     {
         Magazine.OnUpdateAmmoCount.AddListener(UpdateUI);
+
         WeaponHolder.OnPlayerSwitchWeapon.AddListener((weapon) =>
         {
             if (weapon.GetComponent<Magazine>() != null)

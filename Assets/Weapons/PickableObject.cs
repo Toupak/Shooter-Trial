@@ -10,16 +10,19 @@ public class PickableObject : MonoBehaviour
 
     public bool isAimed;
 
-    //public enum : Weapon / ? -- Fais une action selon le type : ammo/enum/coffre/porte/...
-
     void Start()
     {
         outline = GetComponent<Outline>();
     }
 
-    public GameObject PickUpObject()
+    public GameObject GetGameObject()
     {
         return realObjectPrefab;
+    }
+
+    public void DestroyOnPickUp()
+    {
+        Destroy(transform.gameObject);
     }
 
     private void CastOutline()
