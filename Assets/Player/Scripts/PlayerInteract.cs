@@ -30,35 +30,54 @@ public class PlayerInteract : MonoBehaviour
 
         if (hasHit && isHovering == false)
         {
-            isHovering = true;
-            hoveredObject = hitInfo.collider.gameObject;
-
-            if (hoveredObject.GetComponent<PickableObject>() != null)
-                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
+            StartHovering(hitInfo);
         }
         else if (!hasHit && isHovering == true)
         {
-            isHovering = false;
-
-            if (hoveredObject.GetComponent<PickableObject>() != null)
-                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);    
-
-            hoveredObject = null;
+            StopHovering();
         }
 
         if (hoveredObject != null && hoveredObject.GetComponent<PickableObject>() != null && PlayerStateMachine.Instance.input.GetInteractInput())
         {
-            OnPlayerPickUp.Invoke(hoveredObject.GetComponent<PickableObject>().GetGameObject());
-
-            isHovering = false;
-
-            if (hoveredObject.GetComponent<PickableObject>() != null)
-            {
-                hoveredObject.GetComponent<PickableObject>().SetAimState(isHovering);
-                hoveredObject.GetComponent<PickableObject>().DestroyOnPickUp();
-            }
-
-            hoveredObject = null;
+            StopHoveringOnPickup();
         }
+    }
+
+    private void StartHovering(RaycastHit hitInfo)
+    {
+        isHovering = true;
+        hoveredObject = hitInfo.collider.gameObject;
+
+        PickableObject pickableObjectComponent = hoveredObject.GetComponent<PickableObject>();
+
+        if (pickableObjectComponent != null)
+            pickableObjectComponent.SetAimState(isHovering);
+    }
+
+    private void StopHovering()
+    {
+        isHovering = false;
+        PickableObject pickableObjectComponent = hoveredObject.GetComponent<PickableObject>();
+
+        if (pickableObjectComponent != null)
+            pickableObjectComponent.SetAimState(isHovering);
+
+        hoveredObject = null;
+    }
+
+    private void StopHoveringOnPickup()
+    {
+        isHovering = false;
+        PickableObject pickableObjectComponent = hoveredObject.GetComponent<PickableObject>();
+
+        if (pickableObjectComponent != null)
+        {
+            OnPlayerPickUp.Invoke(pickableObjectComponent.GetGameObjectInfo());
+
+            pickableObjectComponent.SetAimState(isHovering);
+            pickableObjectComponent.DestroyOnPickUp();
+        }
+
+        hoveredObject = null;
     }
 }

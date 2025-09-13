@@ -43,16 +43,16 @@ public class WeaponHolder : MonoBehaviour
     {
         if (slot2.transform.childCount == 0)
         {
-            GameObject GunToAssign = Instantiate(newWeapon);
-            GunToAssign.transform.SetParent(slot2.transform);
-
             slot1.SetActive(false);
             slot2.SetActive(true);
+
+            GameObject GunToAssign = Instantiate(newWeapon);
+            GunToAssign.transform.SetParent(slot2.transform);
 
             activeSlot = slot2;
             activeWeapon = GunToAssign;
 
-            OnPlayerSwitchWeapon.Invoke(GunToAssign);
+            OnPlayerSwitchWeapon.Invoke(activeWeapon);
             return;
         }
 
@@ -100,9 +100,5 @@ public class WeaponHolder : MonoBehaviour
         }
 
         Destroy(activeWeapon);
-
-        //On va chercher le pickableWeapon stocké dans le script Weapon de l'active Weapon.
-        //On instantie le pickable weapon qu'on lance avec une fonction depuis son script pickable Toss();
-        //ActiveWeapon -> Détruit
     }
 }

@@ -31,13 +31,24 @@ public class Magazine : MonoBehaviour
         weapon = GetComponent<Weapon>();
         weaponSFX = GetComponent<WeaponSFX>();
 
-        Weapon.OnPlayerShoot.AddListener((_,_) => UseAmmo());
-
-        Melee.OnPlayerMelee.AddListener(CancelReload);
-        WeaponHolder.OnPlayerSwitchWeapon.AddListener((_) => CancelReload());
-
         bulletsLeft = magazineSize;
         OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
+    }
+
+    private void OnEnable()
+    {
+        Weapon.OnPlayerShoot.AddListener(UseAmmo);
+
+        Melee.OnPlayerMelee.AddListener(CancelMeleeReload);
+        WeaponHolder.OnPlayerSwitchWeapon.AddListener(CancelReload);
+    }
+
+    private void OnDisable()
+    {
+        Weapon.OnPlayerShoot.RemoveListener(UseAmmo);
+
+        Melee.OnPlayerMelee.RemoveListener(CancelMeleeReload);
+        WeaponHolder.OnPlayerSwitchWeapon.RemoveListener(CancelReload);
     }
 
     void Update()
@@ -49,7 +60,7 @@ public class Magazine : MonoBehaviour
             OnPlayerEmptyShoot.Invoke();
     }
 
-    public void UseAmmo()
+    public void UseAmmo(float _, float __)
     {
         bulletsLeft -= 1;
         OnUpdateAmmoCount.Invoke(bulletsLeft, magazineSize);
@@ -72,7 +83,7 @@ public class Magazine : MonoBehaviour
         isReloading = false;
     }
 
-    private void CancelReload()
+    private void CancelReload(GameObject _)
     {
         if (reload != null)
         {
@@ -80,5 +91,10 @@ public class Magazine : MonoBehaviour
             reload = null;
             isReloading = false;
         }
+    }
+
+    private void CancelMeleeReload()
+    {
+        CancelReload(null);
     }
 }

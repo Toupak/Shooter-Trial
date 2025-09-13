@@ -15,7 +15,7 @@ public class PickableObject : MonoBehaviour
         outline = GetComponent<Outline>();
     }
 
-    public GameObject GetGameObject()
+    public GameObject GetGameObjectInfo()
     {
         return realObjectPrefab;
     }

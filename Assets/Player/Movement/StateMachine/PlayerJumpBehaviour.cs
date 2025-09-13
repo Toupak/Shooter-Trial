@@ -89,12 +89,7 @@ public class PlayerJumpBehaviour : IPlayerBehaviour
                     jumpWasReleasedEarly = false;
                     timesJumped = 0;
                     OnPlayerLand.Invoke();
-                    Debug.Log("you touched the ground");
                     hasLanded = true;
-                }
-                else
-                {
-                    Debug.Log("you are now flying");
                 }
 
                 player.isGrounded = checkIfGrounded;
