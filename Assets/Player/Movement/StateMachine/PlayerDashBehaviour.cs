@@ -18,7 +18,7 @@ public class PlayerDashBehaviour : IPlayerBehaviour
         startingPosition = player.transform.position;
         dashDuration = player.data.dashDistance / player.data.dashForce;
 
-        player.velocityDirection = player.cameraOrientation.forward * player.data.dashForce;
+        player.velocityDirection = GetDashDirection(player) * player.data.dashForce;
         player.ApplyMovement();
 
         dashTimeStamp = Time.time;
@@ -55,6 +55,16 @@ public class PlayerDashBehaviour : IPlayerBehaviour
             player.ChangeBehaviour(player.jumpBehaviour);
     }
 
+    private Vector3 GetDashDirection(PlayerStateMachine player)
+    {
+        Vector3 dashDirection = player.orientation.forward * player.inputDirection.z + player.orientation.right * player.inputDirection.x;
+
+        if (dashDirection.sqrMagnitude < 0.01f)
+            return player.orientation.forward;
+
+        return dashDirection.normalized;
+    }
+
     public bool CanDash(PlayerStateMachine player)
     {
         return true;
@@ -74,6 +84,4 @@ public class PlayerDashBehaviour : IPlayerBehaviour
     {
         return BehaviourType.Dash;
     }
-
-    // appuie sur shift -> Ajoute une vélocité dans la direction qu'on regarde 
 }
